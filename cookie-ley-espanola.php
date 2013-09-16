@@ -90,7 +90,7 @@ function cargar_archivos() {
 		);
 	wp_enqueue_script(
 		'jquery.cookie',
-		plugins_url( '/assets/js/jquery.cookie.js' , __FILE__ ),
+		plugins_url( '/assets/js/jquery-cookie/jquery.cookie.js' , __FILE__ ),
 		array( 'jquery' ),
 		'1.0.0'
 		);
