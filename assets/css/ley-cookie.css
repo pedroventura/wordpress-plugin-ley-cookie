@@ -1,0 +1,55 @@
+.wrapperMensajeCookie {
+	background: none repeat scroll 0 0 #999999;
+	bottom: 0;
+	padding-top: 1px;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+}
+.wrapperMensajeCookie .inner {
+	background-color: #F8F8F8;
+	border-top: 1px solid #FFFFFF;
+	padding: 5px 0;
+}
+.wrapperMensajeCookie .textoLegalCookie {
+	background-color: #F1F1F1;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 4px 4px 4px;
+	margin: 0 auto;
+	max-width: 75%;
+	padding: 7px 37px 7px 17px;
+	position: relative;
+}
+.wrapperMensajeCookie .textoLegalCookie p {
+	color: #333333;
+	font-size: 12px;
+	margin: 0;
+}
+.wrapperMensajeCookie .textoLegalCookie p strong {
+	background: url("../images/exclamation.png") no-repeat scroll 0 3px transparent;
+	display: block;
+	font-weight: bold;
+	line-height: 19px;
+	margin-bottom: 3px;
+	padding-left: 19px;
+}
+.wrapperMensajeCookie .textoLegalCookie p a {
+	border-bottom: 1px solid #0097C7;
+	color: #0097C8;
+	font-weight: bold;
+}
+.wrapperMensajeCookie .textoLegalCookie a.cerrarTextoLegalCookie {
+	background: url("../images/cross-script.png") no-repeat scroll 0 0 transparent;
+	display: block;
+	height: 16px;
+	overflow: hidden;
+	position: absolute;
+	right: 8px;
+	text-indent: 100%;
+	top: 12px;
+	white-space: nowrap;
+	width: 16px;
+}
+.cerrarTextoLegalCookie {
+	cursor: pointer;
+}
