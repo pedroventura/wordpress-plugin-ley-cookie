@@ -18,6 +18,9 @@ var CookieLegal = {
 	// si se quiere que dure mas de 1 año se usará esta variable para multiplicar por los años deseados
 	anios: 1,
 
+	// url pagina informativa sobre cookies
+	pagePermanlink: null,
+
 	// funcion para comprobar si el usuario es de España
 	checkGeoUsuario: function _checkGeoUsuario(url) {
 		jQuery.post(url, {action:"geo-ip"}, function(geoUsuario) {
@@ -49,7 +52,7 @@ var CookieLegal = {
 	cargaMensaje: function _cargaMensaje() {
 		laCookie = CookieLegal.leerCookie();
 		if (laCookie != 2) {
-			jQuery('body').prepend('<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p>Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra <a href="/politica-de-cookies/" target="_blank">política de cookies</a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>');
+			jQuery('body').prepend('<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p>Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra <a href="'+ CookieLegal.pagePermanlink +'" target="_blank">Política de cookies</a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>');
 		}
 	},
 
@@ -62,6 +65,7 @@ var CookieLegal = {
 	// funcion de inicialización
 	inicio: function _inicio(setup) {
 		this.web = setup.web;
+		this.pagePermanlink = setup.pagePermanlink;
 		laCookie = this.leerCookie();
 		if (laCookie != 2) {
 			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion

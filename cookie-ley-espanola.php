@@ -24,6 +24,9 @@ do_action( 'wp_ajax_' . $_POST['action'] );
 add_action( 'wp_ajax_nopriv_geo-ip', 'geoUsuario' );
 add_action( 'wp_ajax_geo-ip', 'geoUsuario' );
 
+// creamos la nueva pagina
+register_activation_hook(__FILE__,'crear_pagina'); 
+
 /**
  * Funcion base para comprobar la ip del usuario y devolver el codigo de pais.
  * Esta función esta optimizada para funcionar con el plugin W3 Total Cache, con el que podemos cachear consultas
@@ -31,7 +34,7 @@ add_action( 'wp_ajax_geo-ip', 'geoUsuario' );
  * 
 */
 function geoUsuario() {
- 	 // compruebo si existe el plugin de W3 Total Cache
+	 // compruebo si existe el plugin de W3 Total Cache
 	if (file_exists(WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php')) {
 		require_once WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php';
 		// creo la instancia de la clase para cachear objectos con el plugin de W3 Total cache
@@ -109,9 +112,43 @@ function iniciar_app_cookie() {
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
 			web: "<?php echo str_replace('http://', '',home_url()); ?>", 
-			ajaxCallback: "wp-admin/admin-ajax.php"
+			ajaxCallback: "wp-admin/admin-ajax.php",
+			pagePermanlink:"<?php echo pageSlug();?>"
 		});
 	});
 	</script>
 	<?php 
+}
+
+/**
+ * Funcion para crear una página automáticamente en el blog que será la base de la página informativa
+ * sobre el uso de cookies en cada blog
+*/
+function crear_pagina() {
+	global $wpdb;
+	$the_page_title = 'Política de cookies';
+	$the_page_name = 'politica-cookies-es';
+	$the_page = get_page_by_title( $the_page_title );
+	
+	if ( ! $the_page ) {
+		// generamos los datos de la página
+		$_p = array();
+		$_p['post_title'] = $the_page_title;
+		$_p['post_content'] = "Debes escribir el texto indicando tu política de cookies, con las cookies que usas en tu blog. <br/ > Documentacion: <a href='http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf'>http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a>";
+		$_p['post_status'] = 'publish';
+		$_p['post_type'] = 'page';
+		$_p['comment_status'] = 'closed';
+		$_p['ping_status'] = 'closed';
+		$_p['post_category'] = array(1); // por defecto 'Uncategorised'
+		// insertamos la página en base de datos
+		$the_page_id = wp_insert_post( $_p );
+	}
+}
+
+/**
+ * Obtiene la url de la página del blog. 
+ * En cada uno será diferente en funcion de la configuración de los enlaces permanentes
+*/
+function pageSlug() {
+	return get_permalink(get_page_by_title('Política de cookies'));
 }
