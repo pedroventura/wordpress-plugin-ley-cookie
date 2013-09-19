@@ -32,10 +32,10 @@ var CookieLegal = {
 	// la duración de la cookie será de 1 año por
 	checkCookie: function _checkCookie() {
 		laCookie = CookieLegal.leerCookie();
-		if (typeof laCookie != "undefined") {
-			CookieLegal.setearCookie(2);
-		} else {
+		if (isNaN(laCookie)) {
 			CookieLegal.setearCookie(1);
+		} else {
+			CookieLegal.setearCookie(2);
 		}
 	},
 
