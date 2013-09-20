@@ -20,19 +20,23 @@ El plugin hace consultas a servicios de GeoIP para consultar la procedencia del 
 
 El plugin también hace uso del plugin de cacheo W3 Total Cache, para cachear el resultado de la llamada al servicio de GeoIP, por tener éstos una limitación en el número de llamadas.
 
+**Para desarrolladores**
+
+El código está versionado y es público para todo aquel que quiera colaborar en el desarrollo o mejoras del plugin. <a href="https://github.com/elpeter/wordpress-cookie-espana">https://github.com/elpeter/wordpress-cookie-espana</a>
+
 == Installation ==
 
 Para instalar el plugin.
 
-1. Descarga el plguin, descomprime el fichero y súbelo a la carpeta `/wp-content/plugins/`
+1. Descarga el plguin, descomprime el archivo y súbelo a la carpeta `/wp-content/plugins/`
 2. Activa el plugin.
 3. Edita la página de "Política de cookies" indicando el texto legal y la información de cookies que usa tu blog
 
 O bien puedes descargarlo directamente desde la sección Plugins dentro del panel de tu blog. 
 
-1. Ir a la sección Plugin.
+1. Ir a la sección `Plugin`.
 2. Haz click en el enlace `Añadir nuevo`
-3. En el buscador, escribe "Cookie España"
+3. En el buscador, escribe `Cookie España`
 4. Haz click en instalar
 5. Edita la página de "Política de cookies" indicando el texto legal y la información de cookies que usa tu blog
 
