@@ -24,6 +24,10 @@ El plugin también hace uso del plugin de cacheo W3 Total Cache, para cachear el
 
 El código está versionado y es público para todo aquel que quiera colaborar en el desarrollo o mejoras del plugin. <a href="https://github.com/elpeter/wordpress-cookie-espana">https://github.com/elpeter/wordpress-cookie-espana</a>
 
+== Screenshots ==
+
+1.  Mensaje alerta para el usuario indicando el uso de cookies en el blog
+
 == Installation ==
 
 Para instalar el plugin.
