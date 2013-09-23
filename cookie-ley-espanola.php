@@ -49,6 +49,9 @@ function geoUsuario() {
 			}
 			echo $paisIp;
 			exit;
+		} else {
+			echo obtenerGeoInfo();
+			exit;
 		}
 	} else {
 		echo obtenerGeoInfo();
@@ -112,7 +115,7 @@ function iniciar_app_cookie() {
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
 			web: "<?php echo str_replace('http://', '',home_url()); ?>", 
-			ajaxCallback: "wp-admin/admin-ajax.php",
+			ajaxCallback: "/wp-admin/admin-ajax.php",
 			pagePermanlink:"<?php echo pageSlug();?>"
 		});
 	});
