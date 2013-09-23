@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Cookie Ley Española
  * Plugin URI: http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola
- * Description: Este plugin aporta toda la funcionalidad para hacer cumplir la ley de cookies en España
- * Version: 1.0
+ * Description: Este plugin aporta la funcionalidad para hacer cumplir la ley de cookies en España informado al usuario de que el sitio usa las cookies propias o de terceros para mejorar el servicio de navegación, preferencias, mediciones y/o publicidad
+ * Version: 1.1.2
  * Author: Pedro Ventura
  * Author URI: http://www.pedroventura.com/
  */
@@ -21,8 +21,8 @@ do_action( 'wp_ajax_nopriv_' . $_REQUEST['action'] );
 do_action( 'wp_ajax_' . $_POST['action'] );
 
 //conectamos el plugin con las acciones ajax que se ejecutarán
-add_action( 'wp_ajax_nopriv_geo-ip', 'geoUsuario' );
-add_action( 'wp_ajax_geo-ip', 'geoUsuario' );
+add_action( 'wp_ajax_nopriv_geo-ip', 'geo_usuario' );
+add_action( 'wp_ajax_geo-ip', 'geo_usuario' );
 
 // creamos la nueva pagina
 register_activation_hook(__FILE__,'crear_pagina'); 
@@ -33,7 +33,7 @@ register_activation_hook(__FILE__,'crear_pagina');
  * a la API externa de geoip, la cual tiene un límite de 10,000 llamadas a la hora.
  * 
 */
-function geoUsuario() {
+function geo_usuario() {
 	 // compruebo si existe el plugin de W3 Total Cache
 	if (file_exists(WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php')) {
 		require_once WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php';
@@ -42,16 +42,19 @@ function geoUsuario() {
 		// compruebo si el cacheo de objectos está activo
 		$cacheActivo = $cacheObjeto->_caching;
 		if ($cacheActivo) {
-			$paisIp = $cacheObjeto->get('ip_' . ipToSlug($_SERVER['REMOTE_ADDR']),'cookieLegal');
+			$paisIp = $cacheObjeto->get('ip_' . ip_to_slug($_SERVER['REMOTE_ADDR']),'cookieLegal');
 			if ( $paisIp === false ) {
-				$paisIp = obtenerGeoInfo();
-				$cacheObjeto->add('ip_' . ipToSlug($_SERVER['REMOTE_ADDR']), $paisIp, 'cookieLegal', 3600);
+				$paisIp = obtener_geo_info();
+				$cacheObjeto->add('ip_' . ip_to_slug($_SERVER['REMOTE_ADDR']), $paisIp, 'cookieLegal', 3600);
 			}
 			echo $paisIp;
 			exit;
+		} else {
+			echo obtener_geo_info();
+			exit;
 		}
 	} else {
-		echo obtenerGeoInfo();
+		echo obtener_geo_info();
 		exit;
 	}
 }
@@ -62,7 +65,7 @@ function geoUsuario() {
  * @link http://freegeoip.net/
  * @todo conectar con varios servicios, otro ejemplo http://api.hostip.info/get_json.php?ip=XX.XX.XX.XX
 */
-function obtenerGeoInfo() {
+function obtener_geo_info() {
 	$urlIpCheck = 'http://freegeoip.net/json/' .  $_SERVER['REMOTE_ADDR'];
 	$contenido = file_get_contents($urlIpCheck);
 	$parsedJson  = json_decode($contenido);
@@ -77,7 +80,7 @@ function obtenerGeoInfo() {
  * Funcion para crear un slug en base a una ip. 
  * Se usará como base del id cuando se cachea la consulta
 */
-function ipToSlug($ip) {
+function ip_to_slug($ip) {
 	return str_replace('.', '_', $ip);
 }
 
@@ -112,8 +115,8 @@ function iniciar_app_cookie() {
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
 			web: "<?php echo str_replace('http://', '',home_url()); ?>", 
-			ajaxCallback: "wp-admin/admin-ajax.php",
-			pagePermanlink:"<?php echo pageSlug();?>"
+			ajaxCallback: "/wp-admin/admin-ajax.php",
+			pagePermanlink:"<?php echo page_slug();?>"
 		});
 	});
 	</script>
@@ -149,6 +152,6 @@ function crear_pagina() {
  * Obtiene la url de la página del blog. 
  * En cada uno será diferente en funcion de la configuración de los enlaces permanentes
 */
-function pageSlug() {
+function page_slug() {
 	return get_permalink(get_page_by_title('Política de cookies'));
 }
