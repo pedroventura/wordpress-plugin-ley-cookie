@@ -16,7 +16,9 @@ El plugin también hace uso del plugin de cacheo W3 Total Cache, para cachear el
 Instalación en Wordpress
 =======================
 
-<a href="http://wordpress.org/plugins/spain-cookie-law/installation/">http://wordpress.org/plugins/spain-cookie-law/installation/</a>
+Url del plugin en Wordpress: <a href="http://wordpress.org/plugins/spain-cookie-law/">http://wordpress.org/plugins/spain-cookie-law/</a>
+
+Guía de instalación: <a href="http://wordpress.org/plugins/spain-cookie-law/installation/">http://wordpress.org/plugins/spain-cookie-law/installation/</a>
 
 FAQ y Colaboración
 =======================
