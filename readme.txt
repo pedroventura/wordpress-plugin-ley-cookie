@@ -11,6 +11,8 @@ Este plugin aporta la funcionalidad para hacer cumplir la ley de cookies en Espa
 
 Este plugin aporta la funcionalidad para hacer cumplir la ley de cookies en España informado al usuario de que el sitio usa las cookies propias o de terceros para mejorar el servicio de navegación, preferencias, mediciones y/o publicidad.
 
+¡Importante! El plugin sigue en desarrollo y actualmente no permite cumplir la ley. <a href="http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/#nocumple">leer más</a>
+
 Se muestra a los usuarios que tienen ip española el mensaje advirtiendo de que el blog visitado usa cookies para diferentes fines.
 
 El plugin adiccionalmente crea una página en tu blog llamada "Política de cookies", en la que el administrador del blog tendrá que indicar el texto legal con todas las cookies que esté usando en el blog. Por defecto se añade un breve texto advirtiendo que hay que completar esta página y un link a un pdf de la agencia española de protección de datos. 
@@ -46,4 +48,4 @@ O bien puedes descargarlo directamente desde la sección Plugins dentro del pane
 
 == Frequently Asked Questions ==
 
-Si tienes dudas, preguntas o te da errores ponte en contacto conmigo. <a href="http://www.pedroventura.com/contacto/">http://www.pedroventura.com/contacto/</a>
+Si tienes dudas, preguntas o te da errores ponte en contacto conmigo. <a href="http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/#comments">http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola</a>
