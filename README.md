@@ -26,3 +26,11 @@ FAQ y Colaboración
 Si tienes dudas, preguntas o te da errores ponte en contacto conmigo. <a href="http://www.pedroventura.com/contacto/">http://www.pedroventura.com/contacto/</a>
 
 No dudes en colaborar en el desarrollo y mejoraras de este plugin. 
+
+TODO
+=======================
+* El plugin aún NO cumple la premisa de evitar que se instalen las cookies antes de que el usuario las acepte. Es decir NO se pueden instalar cookies hasta que el usuario de consentimiento, ya sea continuando con la navegación o pulsando un botón aceptar, en ese momento ya se pueden instalar las cookies y no antes.
+El plugin ahora NO es capaz de evitar que se instalen las cookies que usa el blog, ya sean las de google analytics, o cualquier otra que use el blog.
+Todo este desarrollo está en progreso pero depende de que otros desarrolladores colaboren con el proyecto de este plugin.
+En caso de que no sea viable integrar esta funcionalidad, el plugin NO podrá hacer cumplir la Ley de Cookies
+* El texto informativo está hardcodeado en el javascript, se debe crear en el dashboard de Wordpress un menú donde el usuario pueda ajustar el texto, y este texto se debe guardar en las opciones del plugin en la base de datos del usuario. 
