@@ -23,7 +23,7 @@ Guía de instalación: <a href="http://wordpress.org/plugins/spain-cookie-law/in
 FAQ y Colaboración
 =======================
 
-Si tienes dudas, preguntas o te da errores ponte en contacto conmigo. <a href="http://www.pedroventura.com/contacto/">http://www.pedroventura.com/contacto/</a>
+Si tienes dudas, preguntas o te da errores ponte en contacto conmigo: <a href="http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/#comments">página del plugin</a>
 
 No dudes en colaborar en el desarrollo y mejoraras de este plugin. 
 
