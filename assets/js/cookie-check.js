@@ -22,54 +22,54 @@ var CookieLegal = {
 	pagePermanlink: null,
 
 	// funcion para comprobar si el usuario es de España
-	checkGeoUsuario: function _checkGeoUsuario(url) {
-		jQuery.post(url, {action:"geo-ip"}, function(geoUsuario) {
-			if (geoUsuario == 'ES') {
+	checkGeoUsuario: function _checkGeoUsuario( url ) {
+		jQuery.post( url, {action:"geo-ip"}, function( geoUsuario ) {
+			if ( geoUsuario == 'ES' ) {
 				CookieLegal.checkCookie();
 				CookieLegal.cargaMensaje();
 			}
-		});
+		} );
 	},
 
 	// funcion que se encarga de crear y setear la cookie.
 	// la duración de la cookie será de 1 año por
 	checkCookie: function _checkCookie() {
 		laCookie = CookieLegal.leerCookie();
-		if (isNaN(laCookie)) {
-			CookieLegal.setearCookie(1);
+		if ( isNaN( laCookie ) ) {
+			CookieLegal.setearCookie( 1 );
 		} else {
-			CookieLegal.setearCookie(2);
+			CookieLegal.setearCookie( 2 );
 		}
 	},
 
 	// crea la cookie con el valor asignado
-	setearCookie: function _setearCookie(valor) {
-		jQuery.cookie('cookie_legal_' + CookieLegal.web, valor , { expires: CookieLegal.duracionDias * CookieLegal.anios, path: '/' });
+	setearCookie: function _setearCookie( valor ) {
+		jQuery.cookie( 'cookie_legal_' + CookieLegal.web, valor, { expires: CookieLegal.duracionDias * CookieLegal.anios, path: '/' } );
 	},
 
 	// funcion que se encarga de mostrar el mensaje legal
 	// @todo: Posible mejora para sacar el texto y que se pueda configurar desde el dashboard de WP.
 	cargaMensaje: function _cargaMensaje() {
 		laCookie = CookieLegal.leerCookie();
-		if (laCookie != 2) {
-			jQuery('body').prepend('<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p>Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra <a href="'+ CookieLegal.pagePermanlink +'" target="_blank">Política de cookies</a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>');
+		if ( laCookie != 2 ) {
+			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p>Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra <a href="'+ CookieLegal.pagePermanlink +'" target="_blank">Política de cookies</a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
 		}
 	},
 
 	// funcion para leer el valor de la cookie
 	leerCookie: function _leerCookie() {
-		laCookie = parseInt(jQuery.cookie('cookie_legal_' + CookieLegal.web));
+		laCookie = parseInt( jQuery.cookie( 'cookie_legal_' + CookieLegal.web ) );
 		return laCookie;
 	},
 
 	// funcion de inicialización
-	inicio: function _inicio(setup) {
+	inicio: function _inicio( setup ) {
 		this.web = setup.web;
 		this.pagePermanlink = setup.pagePermanlink;
 		laCookie = this.leerCookie();
-		if (laCookie != 2) {
+		if ( laCookie != 2 ) {
 			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
-			this.checkGeoUsuario(setup.ajaxCallback);
+			this.checkGeoUsuario( setup.ajaxCallback );
 		}
 	}
 };
