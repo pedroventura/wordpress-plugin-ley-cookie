@@ -23,7 +23,7 @@ var CookieLegal = {
 
 	// funcion para comprobar si el usuario es de España
 	checkGeoUsuario: function _checkGeoUsuario( url ) {
-		jQuery.post( url, {action:"geo-ip"}, function( geoUsuario ) {
+		jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
 			if ( geoUsuario == 'ES' ) {
 				CookieLegal.checkCookie();
 				CookieLegal.cargaMensaje();
@@ -67,7 +67,7 @@ var CookieLegal = {
 		this.web = setup.web;
 		this.pagePermanlink = setup.pagePermanlink;
 		laCookie = this.leerCookie();
-		if ( laCookie != 2 ) {
+		if ( ( laCookie != 2 ) || ( isNaN( laCookie ) ) ) {
 			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
 			this.checkGeoUsuario( setup.ajaxCallback );
 		}
