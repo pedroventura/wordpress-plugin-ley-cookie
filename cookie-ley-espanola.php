@@ -3,7 +3,7 @@
  * Plugin Name: Cookie Ley Española
  * Plugin URI: http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola
  * Description: Este plugin aporta la funcionalidad para hacer cumplir la ley de cookies en España informado al usuario de que el sitio usa las cookies propias o de terceros para mejorar el servicio de navegación, preferencias, mediciones y/o publicidad
- * Version: 1.1.2
+ * Version: 1.1.2.2
  * Author: Pedro Ventura
  * Author URI: http://www.pedroventura.com/
  */
@@ -13,15 +13,7 @@ add_action( 'wp_enqueue_scripts', 'cargar_archivos' );
 // en el footer insertamos el código js para iniciar toda la funcionalidad
 add_action( 'wp_footer', 'iniciar_app_cookie' );
 
-// declaramos la URL del fichero que maneja las llamadas AJAX (wp-admin/admin-ajax.php)
-wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-
-// accion para manejar las acciones sobre nuestra funcion
-do_action( 'wp_ajax_nopriv_geo-ip' );
-do_action( 'wp_ajax_geo-ip' );
-
 //conectamos el plugin con las acciones ajax que se ejecutarán
-add_action( 'wp_ajax_nopriv_geo-ip', 'geo_usuario' );
 add_action( 'wp_ajax_geo-ip', 'geo_usuario' );
 
 // creamos la nueva pagina
@@ -34,29 +26,31 @@ register_activation_hook( __FILE__, 'crear_pagina' );
  * 
 */
 function geo_usuario() {
-	 // compruebo si existe el plugin de W3 Total Cache
+	$paisIp = false;
+	 // compruebo si existe el plugin de W3 Total Cache. Busco el archivo con la clase de cacheo de objectos.
 	if ( file_exists( WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php' ) ) {
-		require_once WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php';
-		// creo la instancia de la clase para cachear objectos con el plugin de W3 Total cache
-		$cacheObjeto = & W3_ObjectCache::instance();
-		// compruebo si el cacheo de objectos está activo
-		$cacheActivo = $cacheObjeto->_caching;
-		if ( $cacheActivo ) {
-			$paisIp = $cacheObjeto->get( 'ip_' . ip_to_slug( $_SERVER['REMOTE_ADDR'] ), 'cookieLegal' );
-			if ( $paisIp === false ) {
-				$paisIp = obtener_geo_info();
-				$cacheObjeto->add( 'ip_' . ip_to_slug( $_SERVER['REMOTE_ADDR'] ), $paisIp, 'cookieLegal', 3600 );
+		include_once WP_PLUGIN_DIR . '/w3-total-cache/lib/W3/ObjectCache.php';
+		// si esta función esta declarada es que el plugin W3 está activo
+		if ( function_exists( 'w3_instance' ) ) {
+			// creo la instancia de la clase para cachear objectos con el plugin de W3 Total cache
+			$cacheObjeto = new W3_ObjectCache();
+			// compruebo si el cacheo de objectos está activo
+			$cacheActivo = $cacheObjeto->_caching;
+			if ( $cacheActivo ) {
+				$paisIp = $cacheObjeto->get( 'ip_' . ip_to_slug( $_SERVER['REMOTE_ADDR'] ), 'cookieLegal' );
+				if ( $paisIp === false ) {
+					$paisIp = obtener_geo_info();
+					$cacheObjeto->add( 'ip_' . ip_to_slug( $_SERVER['REMOTE_ADDR'] ), $paisIp, 'cookieLegal', 3600 );
+				}
 			}
-			echo $paisIp;
-			exit;
-		} else {
-			echo obtener_geo_info();
-			exit;
 		}
-	} else {
-		echo obtener_geo_info();
-		exit;
 	}
+	// ultimo chequeo por si algún bucle de control falla que siempre se llame a la funcion para obtener el country_name
+	if ( !$paisIp ) {
+		$paisIp = obtener_geo_info();
+	}
+	echo $paisIp;
+	exit;
 }
 
 /**
