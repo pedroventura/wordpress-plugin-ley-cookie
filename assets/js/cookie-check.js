@@ -24,7 +24,8 @@ var CookieLegal = {
 	// funcion para comprobar si el usuario es de España
 	checkGeoUsuario: function _checkGeoUsuario( url ) {
 		jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
-			if ( geoUsuario == 'ES' ) {
+			var obj = jQuery.parseJSON( geoUsuario );
+			if ( obj.country_name == 'ES' ) {
 				CookieLegal.checkCookie();
 				CookieLegal.cargaMensaje();
 			}
