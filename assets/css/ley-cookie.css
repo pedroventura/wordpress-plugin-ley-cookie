@@ -53,3 +53,18 @@
 .cerrarTextoLegalCookie {
 	cursor: pointer;
 }
+
+/* admin styles */
+
+.admincookie-wrapper-header {
+	margin-top: 20px
+}
+.admincookie-wrapper-header h2 {
+	margin-left: 25px;
+}
+.admincookie-wrapper-header span {
+	background: url("../images/cookie-pencil.png") no-repeat;
+	width: 18px;
+	float: left;
+	display: inline;
+}

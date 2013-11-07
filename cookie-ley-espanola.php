@@ -20,9 +20,28 @@ do_action( 'wp_ajax_geo-ip' );
 add_action( 'wp_ajax_nopriv_geo-ip', 'geo_usuario' );
 add_action( 'wp_ajax_geo-ip', 'geo_usuario' );
 
+//comprobamos las opciones de configuracion
+add_action( 'plugins_loaded', 'comprobar_opciones' );
+
+// creamos el menu en el dashboard
+add_action( 'admin_menu', 'cookie_menu' );
+add_action( 'admin_menu', 'cargar_archivos' );
 
 // creamos la nueva pagina
 register_activation_hook( __FILE__, 'crear_pagina' ); 
+
+function cookie_menu() {
+	add_menu_page( 'Panel', 'Ley Cookie', 'manage_options', 'cookie_ley_espana', 'opciones_menu');
+	// comprobación si vienen datos por post y actualizamos los datos
+	if ( !empty( $_POST['cookie-form'] ) && ( $_POST['cookie-form'] == 1 ) ) {
+		update_option( 'wp_cookie_ley_espana_mensaje', $_POST['mensaje']  );
+		update_option( 'wp_cookie_ley_espana_geoip', convertir_boolean( $_POST['geoip'] ) );
+	}
+}
+
+function opciones_menu() {
+	include_once plugin_dir_path( __FILE__ ) . '/template/admin/form.php';
+}
 
 /**
  * Funcion base para comprobar la ip del usuario y devolver el codigo de pais.
@@ -121,7 +140,8 @@ function iniciar_app_cookie() {
 		CookieLegal.inicio({
 			web: "<?php echo str_replace( 'http://', '', home_url() ); ?>", 
 			ajaxCallback: "/wp-admin/admin-ajax.php",
-			pagePermanlink:"<?php echo page_slug();?>"
+			pagePermanlink:"<?php echo page_slug();?>",
+			mensaje: "<?php echo $mensaje;?>"
 		});
 	});
 	</script>
@@ -151,6 +171,27 @@ function crear_pagina() {
 		// insertamos la página en base de datos
 		$the_page_id = wp_insert_post( $_p );
 	}
+	// guardar las opciones en base de datos
+	$this->comprobar_opciones();
+}
+
+/**
+ * comprobar_opciones
+ * 
+ * @access public
+ *
+ * @return mixed Value.
+ */
+function comprobar_opciones() {
+	$mensaje = get_option('wp_cookie_ley_espana_mensaje');
+	if ( empty($mensaje) ) {
+		update_option( 'wp_cookie_ley_espana_mensaje', 'Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.' );
+	}
+	// opcion para habilitar el geoip
+	$geoip = get_option('wp_cookie_ley_espana_geoip');
+	if ( empty( $geoip ) ) {
+		update_option( 'wp_cookie_ley_espana_geoip', 1 );
+	}
 }
 
 /**
@@ -159,4 +200,11 @@ function crear_pagina() {
 */
 function page_slug() {
 	return get_permalink(get_page_by_title( 'Política de cookies' ));
+}
+
+function convertir_boolean( $check_type ) {
+	if ( $check_type == 'on' ) {
+		return 1;
+	}
+	return 0;
 }
