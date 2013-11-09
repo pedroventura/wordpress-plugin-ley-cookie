@@ -28,17 +28,35 @@ add_action( 'admin_menu', 'cookie_menu' );
 add_action( 'admin_menu', 'cargar_archivos' );
 
 // creamos la nueva pagina
-register_activation_hook( __FILE__, 'crear_pagina' ); 
+register_activation_hook( __FILE__, 'registrar_datos' ); 
 
+/**
+ * cookie_menu
+ * 
+ * @access public
+ *
+ * @return mixed Value.
+ */
 function cookie_menu() {
-	add_menu_page( 'Panel', 'Ley Cookie', 'manage_options', 'cookie_ley_espana', 'opciones_menu');
+	add_menu_page( 'Panel', 'Ley Cookie', 'manage_options', 'cookie_ley_espana', 'opciones_menu' );
 	// comprobación si vienen datos por post y actualizamos los datos
 	if ( !empty( $_POST['cookie-form'] ) && ( $_POST['cookie-form'] == 1 ) ) {
 		update_option( 'wp_cookie_ley_espana_mensaje', $_POST['mensaje']  );
-		update_option( 'wp_cookie_ley_espana_geoip', convertir_boolean( $_POST['geoip'] ) );
+		$checkGeoip = false;
+		if ( isset( $_POST['geoip'] ) ) {
+			$checkGeoip = $_POST['geoip'];
+		}
+		update_option( 'wp_cookie_ley_espana_geoip', convertir_boolean( $checkGeoip ) );
 	}
 }
 
+/**
+ * opciones_menu
+ * 
+ * @access public
+ *
+ * @return mixed Value.
+ */
 function opciones_menu() {
 	include_once plugin_dir_path( __FILE__ ) . '/template/admin/form.php';
 }
@@ -116,7 +134,7 @@ function cargar_archivos() {
 		'cookie-check',
 		plugins_url( '/assets/js/cookie-check.js', __FILE__ ),
 		array( 'jquery' ),
-		'1.1.0'
+		'1.2.0'
 		);
 	wp_enqueue_script(
 		'jquery.cookie',
@@ -134,6 +152,7 @@ function cargar_archivos() {
  * Funcion que inicializa la api de la libreria js que se encarga de comprobar la cookie y mostrar el mensaje
 */
 function iniciar_app_cookie() {
+	$mensaje = get_option( 'wp_cookie_ley_espana_mensaje' );
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -149,30 +168,43 @@ function iniciar_app_cookie() {
 }
 
 /**
+ * registrar_datos
+ * 
+ * @access public
+ *
+ * @return mixed Value.
+ */
+function registrar_datos() {
+	$this->crear_pagina();
+	// guardar las opciones en base de datos
+	$this->comprobar_opciones();
+}
+
+/**
  * Funcion para crear una página automáticamente en el blog que será la base de la página informativa
  * sobre el uso de cookies en cada blog
 */
 function crear_pagina() {
 	global $wpdb;
-	$the_page_title = 'Política de cookies';
-	$the_page_name = 'politica-cookies-es';
-	$the_page = get_page_by_title( $the_page_title );
-	
-	if ( !$the_page ) {
+	$titulo = 'Política de cookies';
+	$checkPagina = get_page_by_title( $titulo );
+
+	if ( !$checkPagina ) {
 		// generamos los datos de la página
-		$_p = array();
-		$_p['post_title'] = $the_page_title;
-		$_p['post_content'] = "Debes escribir el texto indicando tu política de cookies, con las cookies que usas en tu blog. <br/ > Documentacion: <a href='http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf'>http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a>";
-		$_p['post_status'] = 'publish';
-		$_p['post_type'] = 'page';
-		$_p['comment_status'] = 'closed';
-		$_p['ping_status'] = 'closed';
-		$_p['post_category'] = array( 1 ); // por defecto 'Uncategorised'
+		$nuevaPagina = array();
+		$nuevaPagina['post_title'] = $titulo;
+		$nuevaPagina['post_content'] = "Debes escribir el texto indicando tu política de cookies, con las cookies que usas en tu blog. <br/ > Documentacion: <a href='http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf'>http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a>";
+		$nuevaPagina['post_status'] = 'publish';
+		$nuevaPagina['post_type'] = 'page';
+		$nuevaPagina['comment_status'] = 'closed';
+		$nuevaPagina['ping_status'] = 'closed';
+		$nuevaPagina['post_category'] = array( 1 ); // por defecto 'Uncategorised'
 		// insertamos la página en base de datos
-		$the_page_id = wp_insert_post( $_p );
+		$paginaId = wp_insert_post( $nuevaPagina );
+		update_option( 'wp_cookie_ley_espana_page_id', $paginaId );
+	} else {
+		update_option( 'wp_cookie_ley_espana_page_id', $checkPagina->ID );
 	}
-	// guardar las opciones en base de datos
-	$this->comprobar_opciones();
 }
 
 /**
@@ -183,15 +215,23 @@ function crear_pagina() {
  * @return mixed Value.
  */
 function comprobar_opciones() {
-	$mensaje = get_option('wp_cookie_ley_espana_mensaje');
+	$mensaje = get_option( 'wp_cookie_ley_espana_mensaje' );
 	if ( empty($mensaje) ) {
 		update_option( 'wp_cookie_ley_espana_mensaje', 'Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.' );
 	}
 	// opcion para habilitar el geoip
-	$geoip = get_option('wp_cookie_ley_espana_geoip');
+	$geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 	if ( empty( $geoip ) ) {
 		update_option( 'wp_cookie_ley_espana_geoip', 1 );
 	}
+	// comprobación del id de la página
+	$paginaId = get_option( 'wp_cookie_ley_espana_page_id' );
+	if ( empty( $paginaId ) ) {
+		// volvemos a llamar a esta función para comtemplan a los usuarios que tienen que no hayan actualizado el código
+		// de esta manera forzamos a que se cree el campo con el id de la pagina creada
+		$this->crear_pagina();
+	}
+
 }
 
 /**
@@ -199,10 +239,10 @@ function comprobar_opciones() {
  * En cada uno será diferente en funcion de la configuración de los enlaces permanentes
 */
 function page_slug() {
-	return get_permalink(get_page_by_title( 'Política de cookies' ));
+	return get_permalink( get_page_by_id( get_option( 'wp_cookie_ley_espana_page_id' ) ) );
 }
 
-function convertir_boolean( $check_type ) {
+function convertir_boolean( $check_type = false ) {
 	if ( $check_type == 'on' ) {
 		return 1;
 	}
