@@ -5,7 +5,7 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 
 <div class="admincookie-wrapper-header">
 	<span>&nbsp;</span>
-	<h2>Editor Cookie Ley Española</h2>
+	<h2>Editor Ley Cookie</h2>
 </div>
 <?php if ( isset( $_GET['settings-updated'] ) ) { ?>
 <div class="wrap">
@@ -54,6 +54,13 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 							<tr>
 								<th>Soporte y Ayuda </th>
 								<td>Para solicitar ayuda o reportar errores, escribe un comentario en el artículo sobre este plugin: <br/ ><a target="_blank" href="http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/">http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/</a></td>
+							</tr>
+							<tr>
+								<th>Twitter </th>
+								<td>
+									También puedes reportarme comentarios por twitter: <a href="https://twitter.com/intent/tweet?screen_name=pedrojventura" class="twitter-mention-button" data-related="pedrojventura">Tweet to @pedrojventura</a>
+									<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+								</td>
 							</tr>
 							
 						</tbody>
