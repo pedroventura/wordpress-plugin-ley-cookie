@@ -7,6 +7,13 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 	<span>&nbsp;</span>
 	<h2>Editor Cookie Ley Española</h2>
 </div>
+<?php if ( isset( $_GET['settings-updated'] ) ) { ?>
+<div class="wrap">
+	<div id="message" class="updated">
+		<p><strong><?php _e('Settings saved.') ?></strong></p>
+	</div>
+</div>
+<?php } ?>
 
 <div class="wrap">
 	<p>Configura el mensaje que aparece a tus usuarios.</p>
@@ -34,7 +41,7 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 							</tr>
 							<tr>
 								<th></th>
-								<td><input type="submit" class="button-primary" value="Guardar"></td>
+								<td><input type="submit" class="button-primary" value="<?php _e('Save'); ?>"></td>
 								<td><input type="button" onclick="jQuery('#cookie-form-mensaje').html('Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.');" class="button" value="Texto Predeterminado"></td>
 							</tr>
 						</tbody>
