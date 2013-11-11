@@ -58,7 +58,7 @@ function cookie_menu() {
  * @return mixed Value.
  */
 function opciones_menu() {
-	include_once plugin_dir_path( __FILE__ ) . '/template/admin/form.php';
+	include_once plugin_dir_path( __FILE__ ) . '/inc/admin/form.php';
 }
 
 /**
