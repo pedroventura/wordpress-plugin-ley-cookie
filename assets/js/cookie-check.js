@@ -22,6 +22,8 @@ var CookieLegal = {
 	pagePermanlink: null,
 	// mensaje
 	mensaje: null,
+	// titulo página
+	tituloPagina: null,
 
 	// funcion para comprobar si el usuario es de España
 	checkGeoUsuario: function _checkGeoUsuario( url ) {
@@ -55,7 +57,7 @@ var CookieLegal = {
 	cargaMensaje: function _cargaMensaje() {
 		laCookie = CookieLegal.leerCookie();
 		if ( laCookie != 2 ) {
-			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p> '+ CookieLegal.mensaje +' .<a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> Política de Cookies  </a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
+			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>'+ CookieLegal.tituloPagina +'</strong></p><p> '+ CookieLegal.mensaje +' .<a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> '+ CookieLegal.tituloPagina +'  </a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
 		}
 	},
 
@@ -70,6 +72,7 @@ var CookieLegal = {
 		this.web = setup.web;
 		this.pagePermanlink = setup.pagePermanlink;
 		this.mensaje = setup.mensaje;
+		this.tituloPagina = setup.tituloPagina;
 		laCookie = this.leerCookie();
 		if ( ( laCookie != 2 ) || ( isNaN( laCookie ) ) ) {
 			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion

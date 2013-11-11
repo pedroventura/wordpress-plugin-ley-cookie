@@ -153,14 +153,16 @@ function cargar_archivos() {
 */
 function iniciar_app_cookie() {
 	$mensaje = get_option( 'wp_cookie_ley_espana_mensaje' );
+	$tituloPagina = page_title();
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
-			web: "<?php echo str_replace( 'http://', '', home_url() ); ?>", 
 			ajaxCallback: "/wp-admin/admin-ajax.php",
+			mensaje: "<?php echo $mensaje;?>",
 			pagePermanlink:"<?php echo page_slug();?>",
-			mensaje: "<?php echo $mensaje;?>"
+			tituloPagina: "<?php echo $tituloPagina;?>",
+			web: "<?php echo str_replace( 'http://', '', home_url() ); ?>", 
 		});
 	});
 	</script>
@@ -175,9 +177,9 @@ function iniciar_app_cookie() {
  * @return mixed Value.
  */
 function registrar_datos() {
-	$this->crear_pagina();
+	crear_pagina();
 	// guardar las opciones en base de datos
-	$this->comprobar_opciones();
+	comprobar_opciones();
 }
 
 /**
@@ -186,25 +188,29 @@ function registrar_datos() {
 */
 function crear_pagina() {
 	global $wpdb;
-	$titulo = 'Política de cookies';
-	$checkPagina = get_page_by_title( $titulo );
 
-	if ( !$checkPagina ) {
-		// generamos los datos de la página
-		$nuevaPagina = array();
-		$nuevaPagina['post_title'] = $titulo;
-		$nuevaPagina['post_content'] = "Debes escribir el texto indicando tu política de cookies, con las cookies que usas en tu blog. <br/ > Documentacion: <a href='http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf'>http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a>";
-		$nuevaPagina['post_status'] = 'publish';
-		$nuevaPagina['post_type'] = 'page';
-		$nuevaPagina['comment_status'] = 'closed';
-		$nuevaPagina['ping_status'] = 'closed';
-		$nuevaPagina['post_category'] = array( 1 ); // por defecto 'Uncategorised'
-		// insertamos la página en base de datos
-		$paginaId = wp_insert_post( $nuevaPagina );
-		update_option( 'wp_cookie_ley_espana_page_id', $paginaId );
-	} else {
-		update_option( 'wp_cookie_ley_espana_page_id', $checkPagina->ID );
-	}
+	$paginaId = get_option( 'wp_cookie_ley_espana_page_id' );
+
+	if ( empty( $paginaId ) ) {
+		$titulo = 'Política de cookies';
+		$checkPagina = get_page_by_title( $titulo );
+		if ( !$checkPagina ) {
+			// generamos los datos de la página
+			$nuevaPagina = array();
+			$nuevaPagina['post_title'] = $titulo;
+			$nuevaPagina['post_content'] = "Debes escribir el texto indicando tu política de cookies, con las cookies que usas en tu blog. <br/ > Documentacion: <a href='http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf'>http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a>";
+			$nuevaPagina['post_status'] = 'publish';
+			$nuevaPagina['post_type'] = 'page';
+			$nuevaPagina['comment_status'] = 'closed';
+			$nuevaPagina['ping_status'] = 'closed';
+			$nuevaPagina['post_category'] = array( 1 ); // por defecto 'Uncategorised'
+			// insertamos la página en base de datos
+			$paginaId = wp_insert_post( $nuevaPagina );
+			update_option( 'wp_cookie_ley_espana_page_id', $paginaId );
+		} else {
+			update_option( 'wp_cookie_ley_espana_page_id', $checkPagina->ID );
+		}
+	}	
 }
 
 /**
@@ -229,7 +235,7 @@ function comprobar_opciones() {
 	if ( empty( $paginaId ) ) {
 		// volvemos a llamar a esta función para comtemplan a los usuarios que tienen que no hayan actualizado el código
 		// de esta manera forzamos a que se cree el campo con el id de la pagina creada
-		$this->crear_pagina();
+		crear_pagina();
 	}
 
 }
@@ -239,7 +245,11 @@ function comprobar_opciones() {
  * En cada uno será diferente en funcion de la configuración de los enlaces permanentes
 */
 function page_slug() {
-	return get_permalink( get_page_by_id( get_option( 'wp_cookie_ley_espana_page_id' ) ) );
+	return get_permalink( get_option( 'wp_cookie_ley_espana_page_id' ) );
+}
+
+function page_title() {
+	return get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) );
 }
 
 function convertir_boolean( $check_type = false ) {
