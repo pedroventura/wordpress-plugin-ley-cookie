@@ -29,7 +29,7 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 								<td>
 									<span>Habilitando esta opción sólo muestras el mensaje a los usuarios con ip española</span>
 									<br />
-									<input name="geoip" type="checkbox" <?php echo $geoip ? 'checked' : ''; ?> >
+									<input name="geoip" type="checkbox" <?php echo $geoip == 'on' ? 'checked' : ''; ?> >
 								</td>
 							</tr>
 							<tr>

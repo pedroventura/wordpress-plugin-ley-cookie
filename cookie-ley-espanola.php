@@ -46,7 +46,7 @@ function cookie_menu() {
 		if ( isset( $_POST['geoip'] ) ) {
 			$checkGeoip = $_POST['geoip'];
 		}
-		update_option( 'wp_cookie_ley_espana_geoip', convertir_boolean( $checkGeoip ) );
+		update_option( 'wp_cookie_ley_espana_geoip', comprobar_check( $checkGeoip ) );
 	}
 }
 
@@ -134,7 +134,7 @@ function cargar_archivos() {
 		'cookie-check',
 		plugins_url( '/assets/js/cookie-check.js', __FILE__ ),
 		array( 'jquery' ),
-		'1.2.0'
+		'1.2.1'
 		);
 	wp_enqueue_script(
 		'jquery.cookie',
@@ -154,11 +154,13 @@ function cargar_archivos() {
 function iniciar_app_cookie() {
 	$mensaje = get_option( 'wp_cookie_ley_espana_mensaje' );
 	$tituloPagina = page_title();
+	$checkGeoip = get_option( 'wp_cookie_ley_espana_geoip' );
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
 			ajaxCallback: "/wp-admin/admin-ajax.php",
+			checkGeoip: "<?php echo $checkGeoip;?>",
 			mensaje: "<?php echo $mensaje;?>",
 			pagePermanlink:"<?php echo page_slug();?>",
 			tituloPagina: "<?php echo $tituloPagina;?>",
@@ -222,13 +224,13 @@ function crear_pagina() {
  */
 function comprobar_opciones() {
 	$mensaje = get_option( 'wp_cookie_ley_espana_mensaje' );
-	if ( empty($mensaje) ) {
+	if ( empty( $mensaje) ) {
 		update_option( 'wp_cookie_ley_espana_mensaje', 'Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.' );
 	}
 	// opcion para habilitar el geoip
 	$geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 	if ( empty( $geoip ) ) {
-		update_option( 'wp_cookie_ley_espana_geoip', 1 );
+		update_option( 'wp_cookie_ley_espana_geoip', 'on' );
 	}
 	// comprobación del id de la página
 	$paginaId = get_option( 'wp_cookie_ley_espana_page_id' );
@@ -248,13 +250,29 @@ function page_slug() {
 	return get_permalink( get_option( 'wp_cookie_ley_espana_page_id' ) );
 }
 
+/**
+ * page_title
+ * 
+ * @access public
+ *
+ * @return mixed Value.
+ */
 function page_title() {
 	return get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) );
 }
 
-function convertir_boolean( $check_type = false ) {
-	if ( $check_type == 'on' ) {
-		return 1;
+/**
+ * comprobar_check
+ * 
+ * @param mixed $check_type Description.
+ *
+ * @access public
+ *
+ * @return mixed Value.
+ */
+function comprobar_check( $check_type = false ) {
+	if ( $check_type != 'on' ) {
+		return 'off';
 	}
-	return 0;
+	return 'on';
 }

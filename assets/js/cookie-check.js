@@ -26,14 +26,19 @@ var CookieLegal = {
 	tituloPagina: null,
 
 	// funcion para comprobar si el usuario es de España
-	checkGeoUsuario: function _checkGeoUsuario( url ) {
-		jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
-			var obj = jQuery.parseJSON( geoUsuario );
-			if ( obj.country_name == 'ES' ) {
-				CookieLegal.checkCookie();
-				CookieLegal.cargaMensaje();
-			}
-		} );
+	checkGeoUsuario: function _checkGeoUsuario( url, checkGeoip ) {
+		if (checkGeoip == 'on') {
+			jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
+				var obj = jQuery.parseJSON( geoUsuario );
+				if ( obj.country_name == 'ES' ) {
+					CookieLegal.checkCookie();
+					CookieLegal.cargaMensaje();
+				}
+			} );
+		} else {
+			CookieLegal.checkCookie();
+			CookieLegal.cargaMensaje();
+		}
 	},
 
 	// funcion que se encarga de crear y setear la cookie.
@@ -74,9 +79,9 @@ var CookieLegal = {
 		this.mensaje = setup.mensaje;
 		this.tituloPagina = setup.tituloPagina;
 		laCookie = this.leerCookie();
+		//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
 		if ( ( laCookie != 2 ) || ( isNaN( laCookie ) ) ) {
-			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
-			this.checkGeoUsuario( setup.ajaxCallback );
+			this.checkGeoUsuario( setup.ajaxCallback, setup.checkGeoip );
 		}
 	}
 };
