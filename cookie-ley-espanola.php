@@ -38,7 +38,7 @@ register_activation_hook( __FILE__, 'registrar_datos' );
  * @return mixed Value.
  */
 function cookie_menu() {
-	add_menu_page( 'Panel', 'Ley Cookie', 'manage_options', 'cookie_ley_espana', 'opciones_menu' );
+	add_menu_page( 'Editor Ley Cookie', 'Ley Cookie', 'manage_options', 'cookie_ley_espana', 'opciones_menu' );
 	// comprobación si vienen datos por post y actualizamos los datos
 	if ( !empty( $_POST['cookie-form'] ) && ( $_POST['cookie-form'] == 1 ) ) {
 		update_option( 'wp_cookie_ley_espana_mensaje', $_POST['mensaje']  );

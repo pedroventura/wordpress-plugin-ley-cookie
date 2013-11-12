@@ -32,33 +32,36 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 								</td>
 							</tr>
 							<tr>
-								<th>Habilitar GeoPosicionamiento.</th>
+								<th>Habilitar GeoPosicionamiento:</th>
 								<td>
-									<span>Habilitando esta opción sólo muestras el mensaje a los usuarios con ip española</span>
+									<span>Habilitando esta opción sólo muestras el mensaje a los usuarios con ip española.<br /> Si quieres mostrar el mensaje siempre, NO chequear esta opción.</span>
 									<br />
 									<input name="geoip" type="checkbox" <?php echo $geoip == 'on' ? 'checked' : ''; ?> >
 								</td>
 							</tr>
 							<tr>
 								<th></th>
-								<td><input type="submit" class="button-primary" value="<?php _e('Save'); ?>"></td>
-								<td><input type="button" onclick="jQuery('#cookie-form-mensaje').html('Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.');" class="button" value="Texto Predeterminado"></td>
+								<td>
+									<input type="submit" class="button-primary" value="<?php _e('Save'); ?>">
+									&nbsp;&nbsp;&nbsp;
+									<input type="button" onclick="jQuery('#cookie-form-mensaje').html('Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra Política de cookies.');" class="button" value="Cargar texto predeterminado">
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="postbox">
-					<h3><span>Soporte</span></h3>
+					<h3><span>Soporte y Ayuda</span></h3>
 					<table class="form-table">
 						<tbody>
 							<tr>
-								<th>Soporte y Ayuda </th>
-								<td>Para solicitar ayuda o reportar errores, escribe un comentario en el artículo sobre este plugin: <br/ ><a target="_blank" href="http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/">http://www.pedroventura.com/internet/plugin-en-wordpress-cumplir-ley-espanola/</a></td>
+								<th>Página del plugin</th>
+								<td>Para solicitar ayuda o reportar errores, escribe un comentario en el artículo sobre este plugin: <a target="_blank" href="http://pedroventura.es/1amvc1g">Ir a página del plugin</a></td>
 							</tr>
 							<tr>
 								<th>Twitter </th>
 								<td>
-									También puedes reportarme comentarios por twitter: <a href="https://twitter.com/intent/tweet?screen_name=pedrojventura" class="twitter-mention-button" data-related="pedrojventura">Tweet to @pedrojventura</a>
+									También puedes reportarme comentarios por twitter. <br /> <a href="https://twitter.com/intent/tweet?screen_name=pedrojventura" class="twitter-mention-button" data-related="pedrojventura">Tweet to @pedrojventura</a>
 									<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 								</td>
 							</tr>
@@ -67,6 +70,7 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 					</table>
 				</div>
 			</div>
+			<p class="text-right">Desarrollado por: <a href="http://www.pedroventura.com/" target="_blank"> Pedro Ventura</a></p>
 		</from>
 	</div>
 </div>
