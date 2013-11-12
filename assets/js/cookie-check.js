@@ -20,16 +20,25 @@ var CookieLegal = {
 
 	// url pagina informativa sobre cookies
 	pagePermanlink: null,
+	// mensaje
+	mensaje: null,
+	// titulo página
+	tituloPagina: null,
 
 	// funcion para comprobar si el usuario es de España
-	checkGeoUsuario: function _checkGeoUsuario( url ) {
-		jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
-			var obj = jQuery.parseJSON( geoUsuario );
-			if ( obj.country_name == 'ES' ) {
-				CookieLegal.checkCookie();
-				CookieLegal.cargaMensaje();
-			}
-		} );
+	checkGeoUsuario: function _checkGeoUsuario( url, checkGeoip ) {
+		if (checkGeoip == 'on') {
+			jQuery.post( url, { action:"geo-ip" }, function( geoUsuario ) {
+				var obj = jQuery.parseJSON( geoUsuario );
+				if ( obj.country_name == 'ES' ) {
+					CookieLegal.checkCookie();
+					CookieLegal.cargaMensaje();
+				}
+			} );
+		} else {
+			CookieLegal.checkCookie();
+			CookieLegal.cargaMensaje();
+		}
 	},
 
 	// funcion que se encarga de crear y setear la cookie.
@@ -53,7 +62,7 @@ var CookieLegal = {
 	cargaMensaje: function _cargaMensaje() {
 		laCookie = CookieLegal.leerCookie();
 		if ( laCookie != 2 ) {
-			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>Uso de cookies</strong></p><p>Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación, y ofrecer contenidos y publicidad de interés. Al continuar con la navegación entendemos que se acepta nuestra <a href="'+ CookieLegal.pagePermanlink +'" target="_blank">Política de cookies</a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
+			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>'+ CookieLegal.tituloPagina +'</strong></p><p> '+ CookieLegal.mensaje +' .<a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> '+ CookieLegal.tituloPagina +'  </a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
 		}
 	},
 
@@ -67,10 +76,12 @@ var CookieLegal = {
 	inicio: function _inicio( setup ) {
 		this.web = setup.web;
 		this.pagePermanlink = setup.pagePermanlink;
+		this.mensaje = setup.mensaje;
+		this.tituloPagina = setup.tituloPagina;
 		laCookie = this.leerCookie();
+		//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
 		if ( ( laCookie != 2 ) || ( isNaN( laCookie ) ) ) {
-			//cuando ya existe la cookie no hace falta seguir haciendo esta comprobacion
-			this.checkGeoUsuario( setup.ajaxCallback );
+			this.checkGeoUsuario( setup.ajaxCallback, setup.checkGeoip );
 		}
 	}
 };
