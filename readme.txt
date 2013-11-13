@@ -1,4 +1,4 @@
-=== Cookie Ley Española ===
+=== Wordpress Plugin Ley Cookie ===
 Tags: Cookie, cookies, ley, law, Spain, España
 Tested up to: 3.7.1
 Stable tag: 1.2
