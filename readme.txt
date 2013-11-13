@@ -24,7 +24,7 @@ El plugin también hace uso del plugin de cacheo W3 Total Cache, para cachear el
 
 **Para desarrolladores**
 
-El código está versionado y es público para todo aquel que quiera colaborar en el desarrollo o mejoras del plugin. <a href="https://github.com/elpeter/wordpress-cookie-espana">https://github.com/elpeter/wordpress-cookie-espana</a>
+El código está versionado y es público para todo aquel que quiera colaborar en el desarrollo o mejoras del plugin. <a href="https://github.com/elpeter/wordpress-plugin-ley-cookie">https://github.com/elpeter/wordpress-plugin-ley-cookie</a>
 
 == Screenshots ==
 
