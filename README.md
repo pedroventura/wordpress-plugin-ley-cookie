@@ -1,4 +1,4 @@
-Wordpress plugin cookie ley española
+Wordpress plugin Ley Cookie
 =======================
 
 Este plugin aporta la funcionalidad para hacer cumplir la ley de cookies en España informado al usuario de que el sitio usa las cookies propias o de terceros para mejorar el servicio de navegación, preferencias, mediciones y/o publicidad.
