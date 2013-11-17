@@ -47,7 +47,7 @@ function cookie_menu() {
 			$checkGeoip = $_POST['geoip'];
 		}
 		update_option( 'wp_cookie_ley_espana_geoip', comprobar_check( $checkGeoip ) );
-		header('Location: /wp-admin/admin.php?page=cookie_ley_espana&settings-updated=true');
+		header('Location: admin.php?page=cookie_ley_espana&settings-updated=true');
 		exit;
 	}
 }
