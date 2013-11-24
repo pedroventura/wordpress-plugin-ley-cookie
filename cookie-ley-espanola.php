@@ -161,7 +161,7 @@ function iniciar_app_cookie() {
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		CookieLegal.inicio({
-			ajaxCallback: "/wp-admin/admin-ajax.php",
+			ajaxCallback: "<?php echo home_url(); ?>/wp-admin/admin-ajax.php",
 			checkGeoip: "<?php echo $checkGeoip;?>",
 			mensaje: "<?php echo $mensaje;?>",
 			pagePermanlink:"<?php echo page_slug();?>",
