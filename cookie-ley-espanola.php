@@ -163,7 +163,10 @@ function iniciar_app_cookie() {
 		CookieLegal.inicio({
 			ajaxCallback: "<?php echo home_url(); ?>/wp-admin/admin-ajax.php",
 			checkGeoip: "<?php echo $checkGeoip;?>",
-			mensaje: "<?php echo $mensaje;?>",
+			mensaje: "<?php
+				echo str_replace("\n", "<br />",
+					str_replace("\r\n", "\n", $mensaje));
+					?>",
 			pagePermanlink:"<?php echo page_slug();?>",
 			tituloPagina: "<?php echo $tituloPagina;?>",
 			web: "<?php echo str_replace( 'http://', '', home_url() ); ?>", 
