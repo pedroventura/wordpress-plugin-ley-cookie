@@ -30,12 +30,13 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 									<th><label for="pgcache_prime_interval"> Mensaje: </label></th>
 									<td>
 										<textarea id="cookie-form-mensaje" name="mensaje" rows="8" cols="100%"><?php echo $mensaje; ?></textarea>
+										<i>Nota: Al final del mensaje se agregará automáticamente el enlace a tu página de <a href="<?php echo get_permalink( get_option( 'wp_cookie_ley_espana_page_id' ) );  ?>"><?php echo get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) ); ?></a>.</i>
 									</td>
 								</tr>
 								<tr>
 									<th><label> Habilitar GeoPosicionamiento: </label></th>
 									<td>
-										<span>Habilitando esta opción sólo muestras el mensaje a los usuarios con ip española.<br /> Si quieres mostrar el mensaje siempre, NO chequear esta opción.</span>
+										<span>Habilitando esta opción sólo muestras el mensaje a los usuarios con IP española.<br /> Si quieres mostrar el mensaje siempre, NO chequear esta opción.</span>
 										<br />
 										<input name="geoip" type="checkbox" <?php echo $geoip == 'on' ? 'checked' : ''; ?> >
 									</td>
