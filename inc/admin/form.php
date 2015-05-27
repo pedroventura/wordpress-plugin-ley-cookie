@@ -30,7 +30,12 @@ $geoip = get_option( 'wp_cookie_ley_espana_geoip' );
 									<th><label for="pgcache_prime_interval"> Mensaje: </label></th>
 									<td>
 										<textarea id="cookie-form-mensaje" name="mensaje" rows="8" cols="100%"><?php echo $mensaje; ?></textarea>
-										<i>Nota: Al final del mensaje se agregará automáticamente el enlace a tu página de <a href="<?php echo get_permalink( get_option( 'wp_cookie_ley_espana_page_id' ) );  ?>"><?php echo get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) ); ?></a>.</i>
+										<p>
+											<i>
+												Nota: Al final del mensaje se agregará automáticamente el enlace a tu página de <a href="<?php echo get_permalink( get_option( 'wp_cookie_ley_espana_page_id' ) );  ?>"><?php echo get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) ); ?></a>.
+												<a href="/wp-admin/edit.php?s=<?php echo  get_the_title( get_option( 'wp_cookie_ley_espana_page_id' ) ); ?>&post_status=all&post_type=page"><img src="<?php echo  plugin_dir_url( __FILE__ ) . '../../assets/images/glyphicons-151-edit.png'?>" title="Editar página" /></a>
+											</i>
+										</p>
 									</td>
 								</tr>
 								<tr>

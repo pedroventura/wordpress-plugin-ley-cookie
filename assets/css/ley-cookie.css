@@ -1,5 +1,4 @@
 .wrapperMensajeCookie {
-	background: none repeat scroll 0 0 #999999;
 	bottom: 0;
 	padding-top: 1px;
 	position: fixed;
@@ -7,13 +6,11 @@
 	z-index: 100;
 }
 .wrapperMensajeCookie .inner {
-	background-color: #F8F8F8;
-	border-top: 1px solid #FFFFFF;
 	padding: 5px 0;
 }
 .wrapperMensajeCookie .textoLegalCookie {
 	background-color: #F1F1F1;
-	border: 1px solid #DDDDDD;
+	border: 1px solid #fae3e5;
 	border-radius: 4px 4px 4px 4px;
 	margin: 0 auto;
 	max-width: 75%;
@@ -26,7 +23,7 @@
 	margin: 0;
 }
 .wrapperMensajeCookie .textoLegalCookie p strong {
-	background: url("../images/exclamation.png") no-repeat scroll 0 3px transparent;
+	background: url("../images/glyphicons-197-circle-exclamation-mark.png") no-repeat scroll 0 3px transparent;
 	display: block;
 	font-weight: bold;
 	line-height: 19px;
@@ -38,7 +35,7 @@
 	font-weight: bold;
 }
 .wrapperMensajeCookie .textoLegalCookie a.cerrarTextoLegalCookie {
-	background: url("../images/cross-script.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/glyphicons-208-remove-2.png") no-repeat scroll 0 0 transparent;
 	display: block;
 	height: 16px;
 	overflow: hidden;
@@ -62,7 +59,7 @@
 	margin-left: 25px;
 }
 .admincookie-wrapper-header span {
-	background: url("../images/cookie-pencil.png") no-repeat;
+	background: url("../images/glyphicons-281-settings.png") no-repeat;
 	width: 18px;
 	float: left;
 	display: inline;
